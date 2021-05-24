@@ -9,7 +9,7 @@ Implement two functions in [src/index.js](src/index.js):
 ## Requirements:
 
 - getA, getB, getC should be cached for 490 ms upon request (not upon response)
-- All tests should be successful
+- Tests at [src/index.test.js](src/index.test.js) should be successful
 - Test code coverage should be at 100%. Add tests if needed
 
 ## Test:
