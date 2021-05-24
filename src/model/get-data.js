@@ -1,6 +1,6 @@
 const { wait } = require('../util/wait.js');
 
-const WAIT_MIN = 100;
+const WAIT_MIN = 600;
 const WAIT_MAX = 900;
 
 const counters = {};
