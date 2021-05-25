@@ -10,4 +10,4 @@ Implement two requests, loading data from various sources cached for 500ms.
 
 1. Add code in [src/index.js](src/index.js) completing the two functions `requestAandB` and `requestBandC` so that:
     * running the test with `npm test` passes successfuly
-    * `loadDataA`, `loadDataB` and `loadDataC` is being cached for 500ms (used only once in 500ms)
+    * `loadDataA`, `loadDataB` and `loadDataC` are being cached for 500ms (used only once in 500ms)
