@@ -15,7 +15,7 @@ test('Test cache timings ', () => Promise.all([
     expect(requestBandC()).resolves.toEqual('B1C1'),
   ])),
 
-  // send two requests in parallel after 500 ms
+  // send two requests in parallel after 520 ms
   wait(520).then(() => Promise.all([
     expect(requestAandB()).resolves.toEqual('A2B2'),
     expect(requestBandC()).resolves.toEqual('B2C2'),
