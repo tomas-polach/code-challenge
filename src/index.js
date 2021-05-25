@@ -1,35 +1,37 @@
-const { getA, getB, getC } = require('./model/get-data.js');
+const { loadDataA, loadDataB, loadDataC } = require('./model/get-data.js');
 
 /**
- * Retrieves the results from getA and getB, caches them and returns them as a concatenated string
+ * 1. Retrieves the cached results from loadDataA and loadDataB
+ * 2. Returns both results as concatinated string
  *
  * @returns {String}
  *
  * @example
  * // calling the function the first time returns "A1B1"
- * await getAandB();
- * // calling it 500ms later returns "A2B2"
- * await new Promise((resolve) => setTimeout(resolve, 500));
- * await getAandB();
+ * await requestAandB();
+ * // calling it 510ms later returns "A2B2"
+ * await new Promise((resolve) => setTimeout(resolve, 510));
+ * await requestAandB();
  */
-async function getAandB() {
+async function requestAandB() {
   // TODO: Add code here, then run `npm test`
 }
 
 /**
- * Retrieves the results from getB and getC, caches them and returns them as a concatenated string
+ * 1. Retrieves the cached results from loadDataB and loadDataC
+ * 2. Returns both results as concatinated string
  *
  * @returns {String}
  *
  * @example
  * // calling the function the first time returns "B1C1"
- * await getBandC();
- * // calling it 500ms later returns "B2C2"
- * await new Promise((resolve) => setTimeout(resolve, 500));
- * await getBandC();
+ * await requestBandC();
+ * // calling it 510ms later returns "B2C2"
+ * await new Promise((resolve) => setTimeout(resolve, 510));
+ * await requestBandC();
  */
-async function getBandC() {
+async function requestBandC() {
   // TODO: Add code here, then run `npm test`
 }
 
-module.exports = { getAandB, getBandC }
+module.exports = { requestAandB, requestBandC }

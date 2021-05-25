@@ -6,17 +6,17 @@ const WAIT_MAX = 900;
 const counters = {};
 
 /**
- * Mocks a data request with variating output, indicating how often the function has been called
+ * Mocks loading data asynchronously. Results indicate how often the function has been called
  *
  * @returns {String} Returns a input value with a counter
  *
  * @example
  * // calling the function returns "A1"
- * await fakeDbQuery('A');
+ * await mockLoading('A');
  * // calling it the second time returns "A2"
- * await fakeDbQuery('A');
+ * await mockLoading('A');
  */
-async function fakeDbQuery(str) {
+async function mockLoading(str) {
   // introduce some latency
   const waitDuration = Math.round(Math.random() * (WAIT_MAX - WAIT_MIN)) + WAIT_MIN;
   await wait(waitDuration);
@@ -26,7 +26,7 @@ async function fakeDbQuery(str) {
 }
 
 module.exports = {
-  getA: async () => fakeDbQuery('A'),
-  getB: async () => fakeDbQuery('B'),
-  getC: async () => fakeDbQuery('C'),
+  loadDataA: async () => mockLoading('A'),
+  loadDataB: async () => mockLoading('B'),
+  loadDataC: async () => mockLoading('C'),
 }
