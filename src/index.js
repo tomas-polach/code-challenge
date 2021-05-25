@@ -7,12 +7,12 @@ const { getA, getB, getC } = require('./model/get-data.js');
  *
  * @example
  * // calling the function the first time returns "A1B1"
- * await getAplusB();
+ * await getAandB();
  * // calling it 500ms later returns "A2B2"
  * await new Promise((resolve) => setTimeout(resolve, 500));
- * await getAplusB();
+ * await getAandB();
  */
-async function getAplusB() {
+async function getAandB() {
   // TODO: Add code here, then run `npm test`
 }
 
@@ -23,13 +23,13 @@ async function getAplusB() {
  *
  * @example
  * // calling the function the first time returns "B1C1"
- * await getBplusC();
+ * await getBandC();
  * // calling it 500ms later returns "B2C2"
  * await new Promise((resolve) => setTimeout(resolve, 500));
- * await getBplusC();
+ * await getBandC();
  */
-async function getBplusC() {
+async function getBandC() {
   // TODO: Add code here, then run `npm test`
 }
 
-module.exports = { getAplusB, getBplusC }
+module.exports = { getAandB, getBandC }

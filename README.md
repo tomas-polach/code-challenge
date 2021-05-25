@@ -3,8 +3,8 @@
 ## Task:
 
 Implement two functions in [src/index.js](src/index.js):
-- `getAplusB` should return the concatenated string from the results of `getA` plus `getB`
-- `getBplusC` should return the concatenated string from the results of `getB` plus `getC`
+- `getAandB` should return the concatenated string from the results of `getA` and `getB`
+- `getBandC` should return the concatenated string from the results of `getB` and `getC`
 
 ## Requirements:
 

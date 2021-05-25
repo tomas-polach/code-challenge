@@ -1,9 +1,9 @@
 const { wait } = require('./util/wait.js');
-const { getAplusB, getBplusC } = require('./index.js');
+const { getAandB, getBandC } = require('./index.js');
 
 async function getAt(duration) {
   await wait(duration);
-  return Promise.all([ getAplusB(), getBplusC()]);
+  return Promise.all([ getAandB(), getBandC()]);
 }
 
 test('Test cache timings ', async () => Promise.all([
