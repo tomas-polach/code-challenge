@@ -1,6 +1,6 @@
 # Code Challenge
 
-Implement two requests, loading data from various sources cached for 500ms.
+Implement two request handling methods, loading data from various sources cached for 500ms.
 
 ## Task:
 
