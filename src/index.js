@@ -1,4 +1,23 @@
-const { loadDataA, loadDataB, loadDataC } = require('./model/get-data.js');
+const getData = require('./model/get-data.js');
+const { wait } = require('./util/wait.js');
+
+const Mutex = require('async-mutex').Mutex;
+const mutex = new Mutex();
+
+const now = Date.now();
+const cacheTimer = 500;
+const expiration = now + cacheTimer;
+const cache = {
+	a: {
+		expiration
+	},
+	b: {
+		expiration
+	},
+	c: {
+		expiration
+	}
+};
 
 /**
  * 1. Retrieves the cached results from loadDataA and loadDataB
@@ -14,7 +33,10 @@ const { loadDataA, loadDataB, loadDataC } = require('./model/get-data.js');
  * await requestAandB();
  */
 async function requestAandB() {
-  // TODO: Add code here, then run `npm test`
+	const promises = [process('a'), process('b')];
+	await Promise.all(promises);
+
+	return cache.a.value + cache.b.value;
 }
 
 /**
@@ -30,8 +52,29 @@ async function requestAandB() {
  * await new Promise((resolve) => setTimeout(resolve, 510));
  * await requestBandC();
  */
+
 async function requestBandC() {
-  // TODO: Add code here, then run `npm test`
+	const promises = [process('b'), process('c')];
+	await Promise.all(promises);
+
+	return cache.b.value + cache.c.value;
+}
+
+const process = async v => {
+	const now = Date.now();
+	const release = await mutex.acquire();
+
+	try {
+		if (now > cache[v].expiration) {
+			cache[v].value = null;
+			cache[v].expiration += cacheTimer;
+		}
+
+		if (!cache[v].value) cache[v].value = await getData['loadData' + v.toUpperCase()]();
+	}
+	finally {
+		release();
+	}
 }
 
 module.exports = { requestAandB, requestBandC }
