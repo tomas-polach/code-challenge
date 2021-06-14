@@ -5,7 +5,7 @@ const Mutex = require('async-mutex').Mutex;
 const mutex = new Mutex();
 
 const now = Date.now();
-const cacheTimer = 500;
+const cacheTimer = 500; //ms
 const expiration = now + cacheTimer;
 const cache = {
 	a: {
@@ -60,19 +60,32 @@ async function requestBandC() {
 	return cache.b.value + cache.c.value;
 }
 
+/**
+ * Update cache function
+ *
+ * @param {string} v - a, b or c
+ */
 const process = async v => {
+	if (!v in ['a', 'b', 'c']) return;
+
+	// we lock the execution timestamp
 	const now = Date.now();
+
+	// we wait for mutex
 	const release = await mutex.acquire();
 
 	try {
+		// if the cache is expired, we clear value and set up new expiration date
 		if (now > cache[v].expiration) {
 			cache[v].value = null;
-			cache[v].expiration += cacheTimer;
+			cache[v].expiration = now + cacheTimer;
 		}
 
-		if (!cache[v].value) cache[v].value = await getData['loadData' + v.toUpperCase()]();
+		// more check could be used there to see if the function is defined
+		if (!cache[v].value) cache[v].value = await getData?.['loadData' + v.toUpperCase()]?.();
 	}
 	finally {
+		// always release mutex to avoid deadlock
 		release();
 	}
 }
