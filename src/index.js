@@ -1,21 +1,18 @@
 const getData = require('./model/get-data.js');
 const { wait } = require('./util/wait.js');
+const mutexify = require('mutexify/promise')
+const lock = mutexify();
 
-const Mutex = require('async-mutex').Mutex;
-const mutex = new Mutex();
-
-const now = Date.now();
 const cacheTimer = 500; //ms
-const expiration = now + cacheTimer;
 const cache = {
 	a: {
-		expiration
+		expiration: 0
 	},
 	b: {
-		expiration
+		expiration: 0
 	},
 	c: {
-		expiration
+		expiration: 0
 	}
 };
 
@@ -33,7 +30,8 @@ const cache = {
  * await requestAandB();
  */
 async function requestAandB() {
-	const promises = [process('a'), process('b')];
+	const now = Date.now();
+	const promises = [process('a', now), process('b', now)];
 	await Promise.all(promises);
 
 	return cache.a.value + cache.b.value;
@@ -54,25 +52,23 @@ async function requestAandB() {
  */
 
 async function requestBandC() {
-	const promises = [process('b'), process('c')];
+	const now = Date.now();
+	const promises = [process('b', now), process('c', now)];
 	await Promise.all(promises);
 
 	return cache.b.value + cache.c.value;
 }
 
 /**
- * Update cache function
+ * Update cache function with mutex
  *
  * @param {string} v - a, b or c
  */
-const process = async v => {
+const process = async (v, now) => {
 	if (!v in ['a', 'b', 'c']) return;
 
-	// we lock the execution timestamp
-	const now = Date.now();
-
-	// we wait for mutex
-	const release = await mutex.acquire();
+	// named lock would be better
+	const release = await lock();
 
 	try {
 		// if the cache is expired, we clear value and set up new expiration date
@@ -85,9 +81,9 @@ const process = async v => {
 		if (!cache[v].value) cache[v].value = await getData?.['loadData' + v.toUpperCase()]?.();
 	}
 	finally {
-		// always release mutex to avoid deadlock
 		release();
 	}
+
 }
 
 module.exports = { requestAandB, requestBandC }
